@@ -19,3 +19,8 @@ function fibs(num) {
 
   return resultArray;
 }
+
+console.log("fibs(8): ");
+console.log(fibs(8));
+console.log("fibs(20): ");
+console.log(fibs(20));
