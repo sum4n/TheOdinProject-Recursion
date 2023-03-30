@@ -9,6 +9,33 @@
 // Find the largest palindrome made from the product
 // of two 3-digit numbers.
 
+function palindromeRecursion(number1, number2, largestPalindrome = 0) {
+  if (number1 <= 900) return largestPalindrome;
+
+  if (number2 <= 900) {
+    return palindromeRecursion(number1 - 1, number1 - 1, largestPalindrome);
+    // return;
+  }
+
+  let product = number1 * number2;
+
+  if (checkPalindrome(product)) {
+    // update largest palindrome
+    if (product > largestPalindrome) {
+      largestPalindrome = product;
+    }
+    console.log(`num1: ${number1} num2: ${number2} palin: ${product}`);
+    console.log(`Largest palindrome: ${largestPalindrome}`);
+
+    return palindromeRecursion(number1, number2 - 1, largestPalindrome);
+  } else {
+    // console.log(`num1: ${number1} num2: ${number2}`);
+    return palindromeRecursion(number1, number2 - 1, largestPalindrome);
+  }
+}
+
+console.log(palindromeRecursion(999, 999));
+
 function palindromeLoop() {
   let steps = 0;
   let largestPalindrome = 0;
@@ -48,5 +75,5 @@ function checkPalindrome(num) {
   }
 }
 
-console.log(palindromeLoop());
+// console.log(palindromeLoop());
 // console.log(checkPalindrome(3001));
