@@ -14,7 +14,6 @@ function palindromeRecursion(number1, number2, largestPalindrome = 0) {
 
   if (number2 <= 900) {
     return palindromeRecursion(number1 - 1, number1 - 1, largestPalindrome);
-    // return;
   }
 
   let product = number1 * number2;
@@ -27,7 +26,7 @@ function palindromeRecursion(number1, number2, largestPalindrome = 0) {
     console.log(`num1: ${number1} num2: ${number2} palin: ${product}`);
     console.log(`Largest palindrome: ${largestPalindrome}`);
 
-    return palindromeRecursion(number1, number2 - 1, largestPalindrome);
+    return palindromeRecursion(number1, number2 - 11, largestPalindrome);
   } else {
     // console.log(`num1: ${number1} num2: ${number2}`);
     return palindromeRecursion(number1, number2 - 1, largestPalindrome);
@@ -43,7 +42,7 @@ function palindromeLoop() {
   let secondNum = 0;
 
   for (i = 999; i >= 100; i--) {
-    for (j = i; j >= 100; j--) {
+    for (j = i; j >= 100; j -= i % 11 == 0 ? 11 : 1) {
       // j = i to skip duplicate multiplication.
       let k = i * j;
       steps += 1;
@@ -65,6 +64,7 @@ function palindromeLoop() {
 }
 
 function checkPalindrome(num) {
+  if (num % 11 != 0) return false;
   num = num.toString();
   let numReverse = num.split("").reverse().join("");
 
