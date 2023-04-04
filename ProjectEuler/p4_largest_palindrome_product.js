@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Largest palindrome product
 // Problem 4
 // link: https://projecteuler.net/problem=4
@@ -10,27 +11,58 @@
 // of two 3-digit numbers.
 
 function palindromeRecursion(number1, number2, largestPalindrome = 0) {
-  if (number1 <= 900) return largestPalindrome;
+  if (number1 <= 100) return largestPalindrome;
 
-  if (number2 <= 900) {
+  // if (number2 <= 900 && number1 % 11 == 0) {
+  //   return palindromeRecursion(number1 - 11, 999, largestPalindrome);
+  // }
+
+  if (number2 <= 100) {
     return palindromeRecursion(number1 - 1, number1 - 1, largestPalindrome);
   }
 
   let product = number1 * number2;
 
-  if (checkPalindrome(product)) {
-    // update largest palindrome
-    if (product > largestPalindrome) {
-      largestPalindrome = product;
-    }
+  // if (product < largestPalindrome) {
+  //   return largestPalindrome;
+  // }
+
+  if (number1 % 11 != 0) {
+    console.log(number1);
+    return palindromeRecursion(number1 - 1, 999, largestPalindrome);
+  }
+
+  if (
+    number1 % 11 == 0 &&
+    checkPalindrome(product) &&
+    product > largestPalindrome
+  ) {
+    console.log(number1, number2);
+
+    largestPalindrome = product;
     console.log(`num1: ${number1} num2: ${number2} palin: ${product}`);
     console.log(`Largest palindrome: ${largestPalindrome}`);
+    return palindromeRecursion(number1 - 11, 999, largestPalindrome);
+  }
 
-    return palindromeRecursion(number1, number2 - 11, largestPalindrome);
-  } else {
-    // console.log(`num1: ${number1} num2: ${number2}`);
+  if (
+    number1 % 11 == 0 &&
+    !checkPalindrome(product) &&
+    product > largestPalindrome
+  ) {
+    console.log(number1, number2);
     return palindromeRecursion(number1, number2 - 1, largestPalindrome);
   }
+
+  if (
+    number1 % 11 == 0 &&
+    !checkPalindrome(product) &&
+    product < largestPalindrome
+  ) {
+    return palindromeRecursion(number1 - 11, 999, largestPalindrome);
+  }
+
+  return largestPalindrome;
 }
 
 console.log(palindromeRecursion(999, 999));
@@ -46,15 +78,15 @@ function palindromeLoop() {
       // j = i to skip duplicate multiplication.
       let k = i * j;
       steps += 1;
-      //   console.log(steps);
+      // console.log(steps);
       //   console.log(j);
-      if (checkPalindrome(k)) {
-        // console.log(k);
-        if (k > largestPalindrome) {
-          largestPalindrome = k;
-          firstNum = i;
-          secondNum = j;
-        }
+      // significantly decreases number of steps.
+      if (k < largestPalindrome) break;
+      if (k > largestPalindrome && checkPalindrome(k)) {
+        console.log(k);
+        largestPalindrome = k;
+        firstNum = i;
+        secondNum = j;
       }
     }
   }
